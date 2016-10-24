@@ -16,11 +16,8 @@ public class ApplicationMain {
         ActorRef myActor = system.actorOf(Props.create(MyActor.class), "myActor");
 
         for(int i = 0; i < 10; i++) {
-            myActor.tell(new MyActor.Request(i), null);
+            myActor.tell(new SubActor.Request(i), null);
         }
-
         Await.ready(system.whenTerminated(), Duration.apply(1, TimeUnit.MINUTES));
-
     }
-
 }

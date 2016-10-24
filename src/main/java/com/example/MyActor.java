@@ -9,23 +9,11 @@ import akka.event.LoggingAdapter;
 
 public class MyActor extends UntypedActor {
 
-    public static class Request {
-        private final int num;
-
-        public Request(int num) {
-            this.num = num;
-        }
-
-        public int getNum() {
-            return num;
-        }
-    }
-
-
     private int finished = 0;
 
+    @Override
     public void onReceive(Object message) throws Exception {
-        if (message instanceof Request) {
+        if (message instanceof SubActor.Request) {
             ActorRef subActor = getContext().actorOf(Props.create(SubActor.class));
             subActor.tell(message, getSelf());
         } else if (message instanceof SubActor.Response) {
